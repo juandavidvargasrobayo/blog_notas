@@ -39,7 +39,23 @@ public class GradesControllers {
     //crar una nueva nota
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Grades grades){
-//        Grades gradesNew = service.save(grades);
+//        Grades gradesNew = service.save(grades); //desde el return se crea una nueva nota permitiendo ahorrar lineas de codigo
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(grades));
     }
+
+    //update nota
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update( @RequestBody Grades grades, @PathVariable Long id ){
+        Optional<Grades> gradesOptional = service.update(id, grades);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(gradesOptional.orElseThrow());
+    }
+
+
+    //delete not
+    @DeleteMapping("/{id}")
+    public  ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<Grades> gradesOptional = service.delete(id);
+        return ResponseEntity.ok(gradesOptional.orElseThrow());
+    }
+
 }
