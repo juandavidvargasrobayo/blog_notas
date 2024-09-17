@@ -6,9 +6,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,8 +41,11 @@ public class GradesControllers {
 
     //crar una nueva nota
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Grades grades){
+    public ResponseEntity<?> create(@Valid @RequestBody Grades grades, BindingResult result){
 //        Grades gradesNew = service.save(grades); //desde el return se crea una nueva nota permitiendo ahorrar lineas de codigo
+        if(result.hasFieldErrors()){
+            return validation(result);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(grades));
     }
 
@@ -56,6 +62,16 @@ public class GradesControllers {
     public  ResponseEntity<?> delete(@PathVariable Long id){
         Optional<Grades> gradesOptional = service.delete(id);
         return ResponseEntity.ok(gradesOptional.orElseThrow());
+    }
+
+
+    //Validacion (vaidacion por defecto de spring estas deben de ser anotadas en la entidad ensima de cada atributo)
+    private ResponseEntity<?> validation (BindingResult result){
+        Map<String,String> errors = new HashMap<>();
+        result.getFieldErrors().forEach(err ->{
+            errors.put(err.getField(), "el campo " + err.getField()+ " " + err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
     }
 
 }

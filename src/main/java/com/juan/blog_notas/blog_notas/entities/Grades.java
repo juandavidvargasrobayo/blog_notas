@@ -1,6 +1,8 @@
 package com.juan.blog_notas.blog_notas.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "grades")
@@ -10,7 +12,10 @@ public class Grades {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank //para validacion por defecto de spring
     private String title;
+    @NotEmpty //para validacion por defecto de spring
     private String content;
 
     public Long getId(){
