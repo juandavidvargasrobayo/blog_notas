@@ -1,5 +1,6 @@
 package com.juan.blog_notas.blog_notas.entities;
 
+import com.juan.blog_notas.blog_notas.validation.IsRequired;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,9 +14,11 @@ public class Grades {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank //para validacion por defecto de spring
+//    @NotBlank //para validacion por defecto de spring
+    @IsRequired(message = "{NotBlank.grades.title}")
     private String title;
-    @NotEmpty //para validacion por defecto de spring
+//    @NotEmpty //para validacion por defecto de spring
+    @IsRequired(message = "{NotEmpty.gfrades.content}")
     private String content;
 
     public Long getId(){

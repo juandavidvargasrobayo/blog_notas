@@ -3,7 +3,6 @@ package com.juan.blog_notas.blog_notas.services;
 import com.juan.blog_notas.blog_notas.entities.Grades;
 import com.juan.blog_notas.blog_notas.repositories.GradesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.OpAnd;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
